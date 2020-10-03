@@ -69,6 +69,8 @@ const runloop = async () => {
     console.log('runloop windowsOpen', windowsOpen);
     let message = windowsOpen ? 'Open the windows' : 'Close the windows';
     if (runCount == 0) {
+      console.log('runloop count', runCount);
+      await notifyDevices('toggle windows restarted');
       await notifyDevices(message);
     } else {
       let didSendNotification = await determineIfSent();
