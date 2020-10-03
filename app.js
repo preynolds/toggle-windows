@@ -1,12 +1,9 @@
-const accountSid = "";
-const authToken = "";
-const client = require('twilio')(accountSid, authToken);
-
+const config = require('./config');
+const client = require('twilio')(config.twilio.accountSid, config.twilio.authToken);
 const AmbientWeatherApi = require('ambient-weather-api');
-
 const api = new AmbientWeatherApi({
-  apiKey: process.env.AMBIENT_WEATHER_API_KEY || '',
-  applicationKey: process.env.AMBIENT_WEATHER_APPLICATION_KEY || ''
+  apiKey: config.ambientWeather.apiKey,
+  applicationKey: config.ambientWeather.appKey
 })
 
 let windowsOpen = true;
@@ -34,8 +31,8 @@ const notifyDevices = async (msg) => {
   client.messages
     .create({
       body: msg,
-      from: '',
-      to: ''
+      from: config.notification.phoneFrom,
+      to: config.notification.phoneTo
     })
     .then(message => console.log(message.sid))
     .then(function () {
